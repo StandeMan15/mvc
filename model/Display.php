@@ -2,7 +2,7 @@
 
 class Display{
 
-  public function CreateTable($result, $actionMode = false){
+  public function CreateTable($result, $actionMode = false, $orderPage = false){
     //        die(var_dump($actionMode));
 
     $tableheader = false;
@@ -34,6 +34,12 @@ class Display{
         $html .= "<a href='index.php?con={$_GET['con']}&op=update&id={$row['id']}'><i class='fa fa-edit'></i></a>";
         $html .= "<a href='index.php?con={$_GET['con']}&op=delete&id={$row['id']}'><i class='fa fa-trash'></i></a>";
         $html .= "<a href='index.php?con={$_GET['con']}&op=read&id={$row['id']}'><i class='fa fa-eye'></i></a>";
+        
+        $html .= "</td>";
+      }
+      if ($orderPage) {
+        $html .= "<td style='display: flex; justify-content: space-between;'>";
+        $html .= "<a href='index.php?con={$_GET['con']}&op=order&id={$row['id']}'><i class='fa fa-shopping-cart'></i></a>";
         $html .= "</td>";
       }
       $html .= "</tr>";
@@ -128,5 +134,11 @@ $html .= "</nav>";
 
   }
 
+  public function createCSV($csv) {
+	  $html = "";
+	  $html .= "<a href='view/products/createCSV.csv'>Create CSV</a>";
+
+	  return $html;
+  }
 
 }

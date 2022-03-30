@@ -27,6 +27,10 @@ class MainController {
                 case 'content':
                     $this->ContentController->handleRequest();
                     break;
+
+                case 'order':
+                    $this->OrderController->handleRequest();
+                    break;
                 
                 default:
                     # code...

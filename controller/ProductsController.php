@@ -40,6 +40,10 @@ class ProductsController {
                 case 'export':
                     $this->collectExportProducts();
                     break;
+                
+                case 'order':
+                    $this->collectOrderProducts();
+                    break;
             
                 default:
                     # code...
@@ -98,6 +102,7 @@ class ProductsController {
             include 'view/products/create.php';
         
         }
+
         public function collectReadallProducts(){
 
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;      
@@ -147,7 +152,7 @@ class ProductsController {
 
         if (isset($_POST['submit'])) {
             
-            $html = $this->ProductsLogic->deleteContact($id);
+            $html = $this->ProductsLogic->deleteProduct($id);
 
             $msg = $html;
         }
@@ -160,7 +165,53 @@ class ProductsController {
 
     public function collectExportProducts() {
 
-        
 
+        $html = $this->ProductsLogic->exportProducts();
+        $csv = $html->fetchall(PDO::FETCH_ASSOC);
+
+        echo "<pre>";
+        var_dump($csv);
+
+        if (count($csv) > 0) {
+            $delimiter = ","; 
+            $filename = "members-data_" . date('Y-m-d') . ".csv"; 
+             
+            $f = fopen('php://memory', 'w');
+
+            $fields = array('ID', 'product naam', 'product prijs', 'supplier id', 'product type code', 'other details'); 
+            fputcsv($f, $fields, $delimiter); 
+
+            while($row = count($csv)) {
+
+                $lineData = array($row['product_id'], $row['product_price'], $row['supplier_id'], $row['product_type_code'], $row['other_product_details']); 
+                fputcsv($f, $lineData, $delimiter); 
+            } 
+            
+            fseek($f, 0); 
+            
+            header('Content-Type: text/csv'); 
+            header('Content-Disposition: attachment; filename="' . $filename . '";'); 
+            
+            fpassthru($f);
+        }
+        
+        include 'view/products/createCSV.csv';
+    }
+
+    public function collectOrderProducts() {
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;      
+        $perPage = 5;
+        $limit = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+
+        // $pages = $this->ProductsLogic->pagenav($perPage);
+
+        $res = $this->ProductsLogic->readallProducts($limit,$perPage);
+
+        
+        $pages = $res[0];
+        $nav = $this->Display->PageNavigation($pages,$page);
+        $html = $this->Display->createTable($res[1], false, true);
+
+        include 'view/Products.php';
     }
 }

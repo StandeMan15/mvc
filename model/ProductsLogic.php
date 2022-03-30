@@ -116,6 +116,14 @@ class ProductsLogic
   }
 
   public function exportProducts() {
-    
+	try{
+
+      $sql = "SELECT * FROM `products`";
+	  $results = $this->DataHandler->readData($sql);
+      return $results;
+
+    } catch (Exception $e){
+      throw $e;
+    }
   }
 }
