@@ -1,10 +1,12 @@
 <?php
 
+require_once 'model/ProductsLogic.php';
 require_once 'model/OrderLogic.php';
 require_once 'model/Display.php';
 
 class OrderController {
     public function __construct() {
+        $this->ProductsLogic = new ProductsLogic();
         $this->OrderLogic = new OrderLogic();
         $this->Display = new Display();
     }
@@ -18,13 +20,17 @@ class OrderController {
             $op = isset($_GET['op']) ? $_GET['op'] : '';
 
             switch ($op) {
+                case 'InsertIntoCart':
+                    $this->CollectAddToCart();
+                    break;
+
                 case 'order':
-                    $this->collectCreateContact();
+                    $this->CollectReadProducts();
                     break;
 
                 default:
                     # code...
-                    $this->collectReadallContacts();
+                    $this->CollectReadProducts();
                     break;
             }
 
@@ -32,4 +38,36 @@ class OrderController {
             throw $e;
         }
     }
+
+    public function CollectReadProducts() {
+
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;      
+        $perPage = 5;
+        $limit = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+
+        // $pages = $this->ProductsLogic->pagenav($perPage);
+
+        $res = $this->ProductsLogic->readallProducts($limit,$perPage);
+
+        
+        $pages = $res[0];
+        $nav = $this->Display->PageNavigation($pages,$page,false);
+        $html = $this->Display->createTable($res[1], false, true);
+
+        include 'view/Products.php';
+    }
+
+    public function CollectAddToCart() {
+        $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+
+        $order = array("", "");
+
+        $order[0] .= $id;
+        $order[1] .= 4; 
+
+        echo "<pre>";
+        var_dump($order);
+        echo "</pre>";
+    }
+
 }

@@ -8,7 +8,7 @@
 
         <a class="btn btn-success px-4 float-right" style="height: 40px;" href="index.php?con=products&op=create">Create New Product</a>
         <a class="btn btn-success px-4 float-right" style="height: 40px;" href="index.php?con=products&op=export">Create CSV</a>
-        <a class="btn btn-success px-4 float-right" style="height: 40px;" href="index.php?con=products&op=order">Order</a>
+        <a class="btn btn-success px-4 float-right" style="height: 40px;" href="index.php?con=order&op=order">Order</a>
     </div>
 
 

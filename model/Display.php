@@ -39,7 +39,7 @@ class Display{
       }
       if ($orderPage) {
         $html .= "<td style='display: flex; justify-content: space-between;'>";
-        $html .= "<a href='index.php?con={$_GET['con']}&op=order&id={$row['id']}'><i class='fa fa-shopping-cart'></i></a>";
+        $html .= "<a href='index.php?con=order&op=InsertIntoCart&id={$row['id']}'><i class='fa fa-shopping-cart'></i></a>";
         $html .= "</td>";
       }
       $html .= "</tr>";
@@ -110,21 +110,22 @@ class Display{
 
   }
 
-  public function PageNavigation($pages, $page){
+  public function PageNavigation($pages, $page, $orderPage = false){
 
     $html = "";
     $html .= "<nav class='mt-4'>";
 
     $html .= "<ul class='pagination'>";
         for ($x = 1; $x <= $pages; $x++) {
-            if ($page == $x) {
+            if (($page == $x) && ($orderPage)) {
 
-                $html .= '<li class="link page-item active"><a class="page-link" href="index.php?con=products&page=' . $x . '">' . $x . '<span class="sr-only">(current)</span></a></li>';
-            
+                $html .= '<li class="link page-item active"><a class="page-link" href="index.php?con=' . $_GET['con'] . '&page=' . $x . '">' . $x . '<span class="sr-only">(current)</span></a></li>';
+              
             } else {
 
-                $html .= '<li class="link page-item"><a class="page-link" href="index.php?con=products&page=' . $x . '">' . $x . '</a></li>';
+                $html .= '<li class="link page-item"><a class="page-link" href="index.php?con=' . $_GET['con'] . '&page=' . $x . '">' . $x . '</a></li>';
             }
+
         }
     $html .= "</ul>";
 $html .= "</nav>";

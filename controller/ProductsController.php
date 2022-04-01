@@ -40,10 +40,6 @@ class ProductsController {
                 case 'export':
                     $this->collectExportProducts();
                     break;
-                
-                case 'order':
-                    $this->collectOrderProducts();
-                    break;
             
                 default:
                     # code...
@@ -198,20 +194,4 @@ class ProductsController {
         include 'view/products/createCSV.csv';
     }
 
-    public function collectOrderProducts() {
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;      
-        $perPage = 5;
-        $limit = ($page > 1) ? ($page * $perPage) - $perPage : 0;
-
-        // $pages = $this->ProductsLogic->pagenav($perPage);
-
-        $res = $this->ProductsLogic->readallProducts($limit,$perPage);
-
-        
-        $pages = $res[0];
-        $nav = $this->Display->PageNavigation($pages,$page);
-        $html = $this->Display->createTable($res[1], false, true);
-
-        include 'view/Products.php';
-    }
 }
