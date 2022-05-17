@@ -23,7 +23,7 @@
   <a href="index.php?con=products">Products</a>
   <a href="index.php?con=contacts">Contacts</a>
   <a href="index.php?con=content">Content</a>
-  <a href="#">Link</a>
+  <a href="index.php?con=zoo">Zoo</a>
 </div>
 
 <div class="row">
