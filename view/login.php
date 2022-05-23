@@ -1,12 +1,16 @@
-<?php require 'view/components/header.php'; ?>
+<?php
+require 'view/components/header.php'; ?>
 
     <form action='index.php?con=auth&op=login' method="POST"> 
+        
+        <div class="row">
+        <div class="col-6"><label for="uname"><b>Username</b></label></div>
+        <div class="col-6"><input type="text" placeholder="Enter Username" name="uname" style="width: 50%;" required><br></div>
 
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required><br>
+        <div class="w-100"></div>
+        <div class="col-6"> <label for="psw"><b>Password</b></label></div>
+        <div class="col-6"><input type="password" placeholder="Enter Password" name="psw" required><br></div>
+        </div>
 
         <button type="submit">Login</button>
     </form>

@@ -18,14 +18,22 @@ class AuthController {
             $op = isset($_GET['op']) ? $_GET['op'] : '';
 
             switch ($op) {
-                case 'register':
+                case 'registreer':
                     $this->collectCreateAuth();
                     break;
 
                 case 'login':
-                    $this->collectCreateAuth();
+                    $this->collectReadAuth();
+                    break;
+
+                case 'logout':
+                    $this->destoryLogin();
                     break;
                 
+                case 'showlogin':
+                    $this->ReadLogin();
+                    break;
+
                 default:
                     # code...
                     $this->ReadLogin();
@@ -42,7 +50,7 @@ class AuthController {
         include 'view/login.php';
     }
 
-    public function collectCreateAuth() 
+    public function collectReadAuth() 
     {
         if(empty(trim($_POST["uname"]))){
             $username_err = "Please enter username.";
@@ -54,9 +62,15 @@ class AuthController {
             $password_err = "Please enter your password.";
         } else{
             $password = trim($_POST["psw"]);
+            //$encptpsw = md5($password);
         }
 
-        $res = $this->AuthLogic->handleLogin($username,$password);
-        include 'view/auth/create.php';
+        $res = $this->AuthLogic->readAuth($username,$password);
+        include 'view/auth/read.php';
+    }
+
+    public function destoryLogin() 
+    {
+        include 'view/auth/logout.php';
     }
 }
