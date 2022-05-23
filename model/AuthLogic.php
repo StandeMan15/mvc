@@ -16,15 +16,17 @@ class AuthLogic
   public function readAuth($username,$password)
   {
     try {
-      $sql = "SELECT * FROM `user` WHERE `username` = '{$username}'";
+      $sql = "SELECT * FROM `user` WHERE `username` = '{$username}' AND `password` = '{$password}'";
       $res = $this->DataHandler->readData($sql);
 
       if ($res ->rowCount() > 0) {
         $row = $res->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['currentuser'] = $row['uname'];
+        $_SESSION['currentuser'] = $row['username'];
         $_SESSION['loggedin'] = true;
+        return "Welkom " . $row['username'];
+
       } else {
-        $res = "Invalid password";
+        $res = "Incorrecte gegevens";
       }
 
       return $res;
