@@ -27,36 +27,28 @@ if (!isset($_SESSION)) {
   <p>With a <b>flexible</b> layout.</p>
 </div>
 
-    <div class='navbar'>
-          <div class="row">
-          <div class="col-10">
-            <a href='index.php?con=products'>Products</a>
-            <a href='index.php?con=contacts'>Contacts</a>
-            <a href='index.php?con=content'>Content</a>
-            <a href='index.php?con=zoo'>Zoo</a>
-          </div>
-          <div class="col-2">
-            <?php 
-            
-                if ($_SESSION['loggedin'] == false) { ?>
-                  <a href='index.php?con=auth&op=showlogin'>Login</a>
-                  <a href='index.php?con=auth&op=registreer'>Registreer</a>
 
-                <?php } elseif ($_SESSION['loggedin'] == true) { ?>
-                  <a href='index.php?con=auth&op=logout'>Logout</a>
+<?php 
 
-                <?php } ?>
-          </div>
-          
-    </div>
-  </div> 
+    if (isset($_SESSION['loggedin']) === false) { ?>
+      <div class='navbar'>
+        <a href='index.php'>Home</a>
+        <a href='index.php?con=auth&op=showlogin'>Login</a>
+      </div>
+
+    <?php } elseif (isset($_SESSION['loggedin']) === true) { ?>
+      <div class='navbar'>
+        <a href='index.php?con=products'>Products</a>
+        <a href='index.php?con=contacts'>Contacts</a>
+        <a href='index.php?con=content'>Content</a>
+        <a href='index.php?con=zoo'>Zoo</a>
+        <a href='index.php?con=auth&op=logout'>Logout</a>
+      </div>
+    <?php } ?>
 
 <div class="row">
   <div class="side">
-    <h2 onclick=>About Me</h2>
-    <?php 
-      echo "Logged in is " . $_SESSION['loggedin'];
-      ?>
+    <h2>About Me</h2>
     <h5>Photo of me:</h5>
     <div class="fakeimg" style="height:200px;">Image</div>
     <p>Some text about me in culpa qui officia deserunt mollit anim..</p>

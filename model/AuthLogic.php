@@ -23,7 +23,7 @@ class AuthLogic
         $row = $res->fetch(PDO::FETCH_ASSOC);
         $_SESSION['currentuser'] = $row['username'];
         $_SESSION['loggedin'] = true;
-        return "Welkom " . $row['username'];
+        return "<h3>U bent succesvol ingelogd</h3>";
 
       } else {
         $res = "Incorrecte gegevens";
