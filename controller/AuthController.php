@@ -56,7 +56,7 @@ class AuthController {
             $password = trim($_POST["psw"]);
         }
 
-        $res = $this->AuthLogic->handleLogin($username,$password);
+        $res = $this->AuthLogic->readAuth($username,$password);
         include 'view/auth/create.php';
     }
 }
