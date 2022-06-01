@@ -34,6 +34,26 @@ class AuthController {
                     $this->ReadLogin();
                     break;
 
+                case 'showregister':
+                    $this->ReadRegister();
+                    break;
+
+                case 'showeditregister':
+                    $this->showeditregister();
+                    break;
+
+                case 'editregister':
+                    $this->editregister();
+                    break;
+
+                case 'deletewarning':
+                    $this->deletewarning();
+                    break;
+
+                case 'delete':
+                    $this->deleteuser();
+                    break;
+                        
                 default:
                     # code...
                     $this->ReadLogin();
@@ -48,6 +68,11 @@ class AuthController {
     public function ReadLogin() 
     {
         include 'view/login.php';
+    }
+
+    public function ReadRegister()
+    {
+        include 'view/auth/register.php';
     }
 
     public function collectReadAuth() 
@@ -66,6 +91,97 @@ class AuthController {
         }
 
         $res = $this->AuthLogic->readAuth($username,$password);
+        include 'view/auth/read.php';
+    }
+
+    public function collectCreateAuth() 
+    {
+        if(empty(trim($_POST["fname"]))){
+            $firstname_err = "Please enter your firstname.";
+        } else{
+            $firstname = trim($_POST["fname"]);
+        }
+
+        if(empty(trim($_POST["lname"]))){
+            $lastname_err = "Please enter your lastname.";
+        } else{
+            $lastname = trim($_POST["lname"]);
+        }
+
+        if(empty(trim($_POST["uname"]))){
+            $username_err = "Please enter username.";
+        } else{
+            $username = trim($_POST["uname"]);
+        }
+
+        if(empty(trim($_POST["psw"]))){
+            $password_err = "Please enter your password.";
+        } else{
+            $password = trim($_POST["psw"]);
+            //$encptpsw = md5($password);
+        }
+
+        if(empty(trim($_POST["email"]))){
+            $email_err = "Please enter your email.";
+        } else{
+            $email = trim($_POST["email"]);
+        }
+
+        $res = $this->AuthLogic->createAuth($firstname, $lastname, $username, $password, $email);
+        include 'view/auth/read.php';
+    }
+
+    public function showeditregister()
+    {
+        include 'view/auth/update.php';
+    }
+
+    public function editregister()
+    {
+        if(empty(trim($_POST["fname"]))){
+            $firstname_err = "Please enter your firstname.";
+        } else{
+            $firstname = trim($_POST["fname"]);
+        }
+
+        if(empty(trim($_POST["lname"]))){
+            $lastname_err = "Please enter your lastname.";
+        } else{
+            $lastname = trim($_POST["lname"]);
+        }
+
+        if(empty(trim($_POST["uname"]))){
+            $username_err = "Please enter username.";
+        } else{
+            $username = trim($_POST["uname"]);
+        }
+
+        if(empty(trim($_POST["psw"]))){
+            $password_err = "Please enter your password.";
+        } else{
+            $password = trim($_POST["psw"]);
+            //$encptpsw = md5($password);
+        }
+
+        if(empty(trim($_POST["email"]))){
+            $email_err = "Please enter your email.";
+        } else{
+            $email = trim($_POST["email"]);
+        }
+
+        $res = $this->AuthLogic->editAuth($firstname, $lastname, $username, $password, $email);
+        include 'view/auth/update.php';
+    }
+
+    public function deletewarning() 
+    {
+        include 'view/auth/deletewarning.php';
+    }
+
+    public function deleteuser() 
+    {
+        $username = $_SESSION['currentuser'];
+        $res = $this->AuthLogic->deleteUser($username);
         include 'view/auth/read.php';
     }
 
