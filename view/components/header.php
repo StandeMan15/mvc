@@ -46,10 +46,7 @@ if (!isset($_SESSION)) {
 
     if (isset($_SESSION['loggedin']) === false) { ?>
       <div class='navbar'>
-      <?php
-        foreach ($loggedout as $key=>$value) {
-          echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
-        } ?>
+      <?= $this->Display->CreateHeader($loggedout); ?>
       </div>
 
     <?php } elseif (isset($_SESSION['loggedin']) === true) { ?>
@@ -57,17 +54,10 @@ if (!isset($_SESSION)) {
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
             <div id="myDropdown" class="dropdown-content">
-          <?php 
-            foreach ($dropdown as $key=>$value) {
-              echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
-            } 
-          ?>
+          <?= $this->Display->CreateHeader($dropdown); ?>
             </div>
         </div>
-      <?php
-        foreach ($loggedin as $key=>$value) {
-          echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
-        } ?>
+        <?= $this->Display->CreateHeader($loggedin); ?>
 
       </div>
     <?php } ?>

@@ -130,13 +130,14 @@ $html .= "</nav>";
 
   public function CreateHeader($jsonheader)
   {
-   
+   $html = "";
     if(isset($_SESSION['loggedin']) === true) {
 
       foreach ($jsonheader as $key=>$value) {
-        return "<a href=" . $value->name . ">" . $value->url . "</a>"; 
+        $html .= "<a href=" . $value->url . ">" . $value->name . "</a>"; 
       } 
-    }    
+    } 
+    return $html;   
   }
 }
 
