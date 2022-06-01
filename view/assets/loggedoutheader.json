@@ -1,0 +1,11 @@
+[
+    {
+        "name":"Home",
+        "url":"?con=home"
+    },
+    {
+        "name":"Login",
+        "url":"?con=auth&op=showlogin"
+    }
+
+]

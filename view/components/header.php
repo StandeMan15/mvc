@@ -4,6 +4,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -34,10 +35,21 @@ if (!isset($_SESSION)) {
 <?php 
 
 
+    $getfiles = file_get_contents(__DIR__.'../../assets/loggedinheader.json');
+    $loggedin = json_decode($getfiles);
+
+    $getfiles = file_get_contents(__DIR__.'../../assets/loggedoutheader.json');
+    $loggedout = json_decode($getfiles);
+
+    $getfiles = file_get_contents(__DIR__.'../../assets/dropdownheader.json');
+    $dropdown = json_decode($getfiles);
+
     if (isset($_SESSION['loggedin']) === false) { ?>
       <div class='navbar'>
-        <a href='index.php'>Home</a>
-        <a href='index.php?con=auth&op=showlogin'>Login</a>
+      <?php
+        foreach ($loggedout as $key=>$value) {
+          echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
+        } ?>
       </div>
 
     <?php } elseif (isset($_SESSION['loggedin']) === true) { ?>
@@ -45,17 +57,18 @@ if (!isset($_SESSION)) {
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
             <div id="myDropdown" class="dropdown-content">
-              <a href='index.php?con=auth&op=showeditregister'>Uw Account</a>
-              <a href='index.php?con=auth&op=logout'>Logout</a>
-              <a href='index.php?con=auth&op=deletewarning'>Verwijder Account</a>
+          <?php 
+            foreach ($dropdown as $key=>$value) {
+              echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
+            } 
+          ?>
             </div>
         </div>
-        <a href='index.php?con=products'>Products</a>
-        <a href='index.php?con=contacts'>Contacts</a>
-        <a href='index.php?con=content'>Content</a>
-        <a href='index.php?con=zoo'>Zoo</a>
+      <?php
+        foreach ($loggedin as $key=>$value) {
+          echo "<a href=" . $value->url . ">" . $value->name . "</a>"; 
+        } ?>
 
- 
       </div>
     <?php } ?>
 

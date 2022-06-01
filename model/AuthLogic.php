@@ -21,9 +21,10 @@ class AuthLogic
 
       if ($res ->rowCount() > 0) {
         $row = $res->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['currentuser'] = $row['username'];
+        
         $_SESSION['loggedin'] = true;
         return "<h3>U bent succesvol ingelogd</h3>";
+
 
       } else {
         $res = "Incorrecte gegevens";

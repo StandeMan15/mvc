@@ -31,9 +31,9 @@ class Display{
 
       if ($actionMode) {
         $html .= "<td style='display: flex; justify-content: space-between;'>";
-        $html .= "<a href='index.php?con={$_GET['con']}&op=update&id={$row['id']}'><i class='fa fa-edit'></i></a>";
-        $html .= "<a href='index.php?con={$_GET['con']}&op=delete&id={$row['id']}'><i class='fa fa-trash'></i></a>";
-        $html .= "<a href='index.php?con={$_GET['con']}&op=read&id={$row['id']}'><i class='fa fa-eye'></i></a>";
+        $html .= "<a href='?con={$_GET['con']}&op=update&id={$row['id']}'><i class='fa fa-edit'></i></a>";
+        $html .= "<a href='?con={$_GET['con']}&op=delete&id={$row['id']}'><i class='fa fa-trash'></i></a>";
+        $html .= "<a href='?con={$_GET['con']}&op=read&id={$row['id']}'><i class='fa fa-eye'></i></a>";
         $html .= "</td>";
       }
       $html .= "</tr>";
@@ -113,11 +113,11 @@ class Display{
         for ($x = 1; $x <= $pages; $x++) {
             if ($page == $x) {
 
-                $html .= '<li class="link page-item active"><a class="page-link" href="index.php?con=products&page=' . $x . '">' . $x . '<span class="sr-only">(current)</span></a></li>';
+                $html .= '<li class="link page-item active"><a class="page-link" href="?con=products&page=' . $x . '">' . $x . '<span class="sr-only">(current)</span></a></li>';
             
             } else {
 
-                $html .= '<li class="link page-item"><a class="page-link" href="index.php?con=products&page=' . $x . '">' . $x . '</a></li>';
+                $html .= '<li class="link page-item"><a class="page-link" href="?con=products&page=' . $x . '">' . $x . '</a></li>';
             }
         }
     $html .= "</ul>";
@@ -128,5 +128,16 @@ $html .= "</nav>";
 
   }
 
+  public function CreateHeader($jsonheader)
+  {
+   
+    if(isset($_SESSION['loggedin']) === true) {
 
+      foreach ($jsonheader as $key=>$value) {
+        return "<a href=" . $value->name . ">" . $value->url . "</a>"; 
+      } 
+    }    
+  }
 }
+
+?>

@@ -1,0 +1,14 @@
+[
+    {
+        "name":"Logout",
+        "url":"?con=auth&op=logout"
+    },
+    {
+        "name":"Uw Account",
+        "url":"?con=auth&op=showeditregister"
+    },
+    {
+        "name":"Verwijder Account",
+        "url":"?con=auth&op=deletewarning"
+    }
+]
