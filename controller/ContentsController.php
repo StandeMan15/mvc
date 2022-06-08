@@ -1,9 +1,9 @@
 <?php
 
-require_once 'model/ContentLogic.php';
+require_once 'model/ContentsLogic.php';
 require_once 'model/Display.php';
 
-class ContentController 
+class ContentsController 
 {
     public function __construct() {
         $this->ContentLogic = new ContentLogic();
@@ -20,16 +20,20 @@ class ContentController
 
             switch ($op) {
                 case 'create':
-                    $this->collectCreateContent();
+                    $this->collectCreateContents();
                     break;
 
                 case 'update':
-                    $this->collectUpdateContact();
+                    $this->collectUpdateContents($_REQUEST['id']);
+                    break;
+
+                case 'read':
+                    $this->collectReadContents($_REQUEST['id']);
                     break;
 
                 default:
                     # code...
-                    $this->collectReadallContent();
+                    $this->collectReadAllContents();
                     break;
             }
 
@@ -38,25 +42,26 @@ class ContentController
         }
     }
 
-        public function collectReadallContent(){
+        public function collectReadAllContents(){
             $res = $this->ContentLogic->readallContent();
-            $html = $this->Display->createTable($res, true);
+            $html = $this->Display->createTable($res, true, true);
             
             // $contacts = $this->ContactsLogic->readallContacts();
             include 'view/content.php';
         }
 
-        public function collectReadContent(){
+        public function collectReadContents(){
 
             $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
 
-            $res = $this->ContentLogic->readContent($id);
-            $html = $this->Display->CreateCardContent($res);
+            $result = $this->ContentLogic->readContent($id);
+            //var_dump($result);
+            $html = $this->Display->CreateCard($result);
 
             include 'view/content/read.php';
         }
 
-        public function collectCreateContent(){
+        public function collectCreateContents(){
 
             $contentName = isset($_REQUEST['content_name']) ? $_REQUEST['content_name'] : null;
             $contentType = isset($_REQUEST['content_type']) ? $_REQUEST['content_type'] : null;
@@ -78,7 +83,7 @@ class ContentController
         
         }
 
-        public function collectUpdateContact()
+        public function collectUpdateContents()
         {
 
             $id = isset($_REQUEST['id']) ? $_REQUEST['id'] :null;

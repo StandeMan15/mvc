@@ -2,8 +2,7 @@
 
 class Display{
 
-  public function CreateTable($result, $actionMode = false){
-    //        die(var_dump($actionMode));
+  public function CreateTable($result, $actionMode = false, $blogmode = false){
 
     $tableheader = false;
     $html = "";
@@ -13,9 +12,11 @@ class Display{
       
       if ($tableheader == false) {
         $html .= "<tr>";
+      
         foreach ($row as $key => $value) {
           $html .= "<th>{$key}</th>";
         }
+
         if ($actionMode) {
           $html .= "<th>Actions</th>";
         }
@@ -24,10 +25,22 @@ class Display{
       }
 
       $html .= "<tr>";
+      if ($blogmode) {
+        foreach($row as $key=> $value){
+          if($key == "contents") {
+            $html .= "<td>For content view details</td>";
+          } else {
+            $html .= "<td>{$value}</td>";
+          }
+        }
 
-      foreach($row as $value){
-        $html .= "<td>{$value}</td>";
-    }
+      } else {
+        foreach($row as $value){
+          $html .= "<td>{$value}</td>";
+          //var_dump($value);
+        }
+      }
+
 
       if ($actionMode) {
         $html .= "<td style='display: flex; justify-content: space-between;'>";
@@ -42,66 +55,43 @@ class Display{
     return $html;
   }
 
-
-
-  public function CreateCardContact($result){
+  public function CreateCard($result)
+  {
 
     $result = $result->fetch(PDO::FETCH_ASSOC);
-
     $html = '';
 
-    $html .= "<div class='card'>";
-    $html .= "<img src='view/assets/image/{$result['avatar']}' alt='Avatar' style='width:100%'>";
     $html .= "<div class='container'>";
-    $html .= "<h4><b>{$result['name']}</b></h4>";
-    $html .= "<p>{$result['phone']}</p>";
-    $html .= "<p>{$result['email']}</p>";
-    $html .= "<p>{$result['location']}</p>";
-  
+    $html .= "<div class='row'>";
+    foreach ($result as $key=> $value) {
+      $html .= "<div class='col-3'></div>";
+
+      $html .= "<div class='col-3'>";
+      $html .= $key . ":";
+      $html .= "</div>";
+
+      $html .= "<div class='col-3'>";
+      $html .= $value;
+      $html .= "</div>";
+
+      $html .= "<div class='col-3'></div>";
+    }
+
     $html .= "</div>";
     $html .= "</div>";
 
     return $html;
-
   }
 
-  public function CreateCardProduct($result){
-
+  public function CreateBlogPost($result)
+  {
     $result = $result->fetch(PDO::FETCH_ASSOC);
-
+  
     $html = '';
 
-    $html .= "<div class='card'>";
-    $html .= "<div class='container'>";
-    $html .= "<h4><b>{$result['product_name']}</b></h4>";
-    $html .= "<p>{$result['product_price']}</p>";
-  
-    $html .= "</div>";
-    $html .= "</div>";
+    
 
     return $html;
-
-  }
-
-  public function CreateCardContent($result){
-
-    $result = $result->fetch(PDO::FETCH_ASSOC);
-
-    $html = '';
-
-    $html .= "<div class='card'>";
-    //$html .= "<img src='view/assets/image/{$result['avatar']}' alt='Avatar' style='width:100%'>";
-    $html .= "<div class='container'>";
-    $html .= "<h4><b>{$result['content_name']}</b></h4>";
-    $html .= "<p>{$result['content_type']}</p>";
-    $html .= "<p>{$result['content_html']}</p>";
-    $html .= "<p>{$result['content_url']}</p>";
-  
-    $html .= "</div>";
-    $html .= "</div>";
-
-    return $html;
-
   }
 
   public function PageNavigation($pages, $page){

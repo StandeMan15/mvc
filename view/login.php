@@ -13,8 +13,7 @@ require 'view/components/header.php'; ?>
         </div>
 
         <button type="submit">Login</button>
-        <button><a href='index.php?con=auth&op=showregister'>Registreer</a></button>
-        
     </form>
-
+        <button><a href='index.php?con=auth&op=showregister'>Registreer</a></button>
+        <button><a href='index.php?con=auth&op=triggerforgotpsw'>Forgot password</a></button>
 <?php require 'view/components/footer.php'; ?>

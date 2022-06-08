@@ -53,6 +53,9 @@ class AuthController {
                 case 'delete':
                     $this->deleteuser();
                     break;
+                
+                case 'triggerforgotpsw':
+                    $this->triggerforgotpsw();
                         
                 default:
                     # code...
@@ -188,5 +191,33 @@ class AuthController {
     public function destoryLogin() 
     {
         include 'view/auth/logout.php';
+    }
+
+    public function triggerforgotpsw()
+    {
+        $to = 'recipients@email-address.com';
+        $subject = 'Hello from XAMPP!';
+
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+        // Create email headers
+        $from = "the big mailhog";
+        $headers .= 'From: '.$from."\r\n".
+            'Reply-To: '.$from."\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        // Compose a simple HTML email message
+        $message = '<html><body>';
+        $message .= '<h1 style="color:#f40;">Hi User!</h1>';
+        $message .= '<p style="color:#080;font-size:18px;">This is your only chance to redeem yourself</p>';
+        $message .= '<a href="">click here to redeem yourself </a>';
+        $message .= '</body></html>';
+
+        if (mail($to, $subject, $message, $headers)) {
+          echo "SUCCESS";
+        } else {
+          echo "ERROR";
+        }
     }
 }

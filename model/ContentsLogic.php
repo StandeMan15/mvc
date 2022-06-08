@@ -19,7 +19,7 @@ class ContentLogic
 
         try{
     
-          $sql = "SELECT * FROM `contacts` WHERE `id`='{$id}'";
+          $sql = "SELECT * FROM `content` WHERE `id`='{$id}'";
           $results = $this->DataHandler->readData($sql);
           return $results;
     

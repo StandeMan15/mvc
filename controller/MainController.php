@@ -1,7 +1,7 @@
 <?php
 require_once 'controller/ProductsController.php';
 require_once 'controller/ContactsController.php';
-require_once 'controller/ContentController.php';
+require_once 'controller/ContentsController.php';
 require_once 'controller/ZooController.php';
 require_once 'controller/AuthController.php';
 
@@ -9,7 +9,7 @@ class MainController {
     public function __construct() {
         $this->ContactsController = new ContactsController();
         $this->ProductsController = new ProductsController();
-        $this->ContentController = new ContentController();
+        $this->ContentsController = new ContentsController();
         $this->ZooController = new ZooController();
         $this->AuthController = new AuthController();
     }
@@ -29,7 +29,7 @@ class MainController {
                     break;
                 
                 case 'content':
-                    $this->ContentController->handleRequest();
+                    $this->ContentsController->handleRequest();
                     break;
                 
                 case 'zoo':

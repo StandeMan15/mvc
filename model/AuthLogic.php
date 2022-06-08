@@ -27,7 +27,9 @@ class AuthLogic
 
 
       } else {
-        $res = "Incorrecte gegevens";
+        $res = "Incorrecte gegevens <br>";
+        $res .= "<a href='view/auth/forgotpsw.php'>Wachtwoord vergeten</a>";
+        $res .= "<button onclick='history.back()'>Go Back</button>";
       }
 
       return $res;
