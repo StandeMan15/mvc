@@ -3,9 +3,6 @@
 require_once 'model/HeaderLogic.php';
 require_once 'model/Display.php';
 
-require 'view/assets/loggedinheader.json';
-require 'view/assets/loggedoutheader.json';
-require 'view/assets/dropdownheader.json';
 
 class HeaderController {
     public function __construct() {
@@ -47,6 +44,8 @@ class HeaderController {
 
     public function LoggedOutHeader($loggedout)
     {
+        require 'view/assets/loggedinheader.json';
+
         foreach ($loggedout as $key=>$value) {
             return "<a href=" . $value->url . ">" . $value->name . "</a>"; 
           } 
@@ -54,6 +53,8 @@ class HeaderController {
 
     public function LoggedInHeader($loggedin)
     {
+        require 'view/assets/loggedoutheader.json';
+
         foreach ($loggedin as $key=>$value) {
             return "<a href=" . $value->url . ">" . $value->name . "</a>"; 
           } 
@@ -61,6 +62,8 @@ class HeaderController {
 
     public function DropdownHeader($dropdown)
     {
+        require 'view/assets/dropdownheader.json';
+
         foreach ($dropdown as $key=>$value) {
             return "<a href=" . $value->url . ">" . $value->name . "</a>"; 
           } 
