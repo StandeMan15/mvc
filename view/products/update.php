@@ -3,7 +3,7 @@
     <h1>
         Update Form
     </h1>
-<form action="index.php?con=products&op=update&id=<?= $html['product_id'] ?>" method="POST" enctype="multipart/form-data">
+<form action="index.php?con=products&op=update&id=<?= $html['id'] ?>" method="POST" enctype="multipart/form-data">
 
         <div>
             <label>Product Name:</label>
@@ -11,7 +11,7 @@
         </div>
 
         <div>
-            <label>Product details:</label> 
+            <label>Product details:</label>
             <textarea name='other_product_details' id='other_product_details'><?= $html['other_product_details']; ?></textarea>
         </div>
 

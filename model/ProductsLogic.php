@@ -18,9 +18,9 @@ class ProductsLogic
   public function searchProduct($search){
 
     try{
-      $sql = "SELECT * FROM products 
-      WHERE (product_id LIKE '%$search%' 
-          OR Product_type_code LIKE '%$search%' 
+      $sql = "SELECT * FROM products
+      WHERE (id LIKE '%$search%'
+          OR Product_type_code LIKE '%$search%'
           OR product_name LIKE '%$search%'
           OR product_price LIKE '%$search%'
           OR other_product_details LIKE '%$search%'
@@ -51,7 +51,7 @@ class ProductsLogic
   public function createProducts($product_name, $product_price, $supplier_id, $product_type_code, $other_product_details) {
     try {
 
-      $sql = "INSERT INTO `products` (`product_id`, `product_name`, `product_price`, `other_product_details`, `supplier_id`, `product_type_code`) VALUES (NULL, '{$product_name}', '{$product_price}', '{$other_product_details}', '{$supplier_id}', '{$product_type_code}')";
+      $sql = "INSERT INTO `products` (`id`, `product_name`, `product_price`, `other_product_details`, `supplier_id`, `product_type_code`) VALUES (NULL, '{$product_name}', '{$product_price}', '{$other_product_details}', '{$supplier_id}', '{$product_type_code}')";
       $results = $this->DataHandler->createData($sql);
       return $results;
 
@@ -64,7 +64,7 @@ class ProductsLogic
 
     try{
 
-      $sql = "SELECT * FROM `products` WHERE `product_id`='{$id}'";
+      $sql = "SELECT * FROM `products` WHERE `id`='{$id}'";
       $results = $this->DataHandler->readData($sql);
       return $results;
 
@@ -73,18 +73,30 @@ class ProductsLogic
     }
 
   }
-  public function readallProducts($limit, $perPage) {
+  public function readallProducts($page) {
 
     try {
-      $sql = "SELECT FOUND_ROWS() as total FROM products";
-      $result1 = $this->DataHandler->countPages($sql, $perPage);
+      // $sql = "SELECT FOUND_ROWS() as total FROM products";
+      // $result1 = $this->DataHandler->countPages($sql, $perPage);
 
-      // $sql = "SELECT product_id as id, product_name, product_price, supplier_id, product_type_code, other_product_details FROM products LIMIT $limit, $perpage";
-      $sql = "SELECT product_id as id, product_name, Replace(Replace(Concat('€ ', Format(`product_price`, 2)), ',', ''), '.', ',') AS `product_price`, supplier_id, product_type_code, other_product_details FROM products LIMIT $limit, $perPage";
-      $results = $this->DataHandler->readsData($sql);
+      // // $sql = "SELECT id as id, product_name, product_price, supplier_id, product_type_code, other_product_details FROM products LIMIT $limit, $perpage";
+      // $sql = "SELECT id as id, product_name, Replace(Replace(Concat('€ ', Format(`product_price`, 2)), ',', ''), '.', ',') AS `product_price`, supplier_id, product_type_code, other_product_details FROM products LIMIT $limit, $perPage";
+      // $results = $this->DataHandler->readsData($sql);
 
-      $arry = [$result1, $results];
-      return $arry;
+      // $arry = [$result1, $results];
+      // return $arry;
+
+      //---------------------------------------
+      $offset = ($page-1)*ITEMS_PER_PAGE;
+      $sql = 'SELECT * FROM products LIMIT '.$offset.','.ITEMS_PER_PAGE;
+      $paginationsql = "SELECT id, product_name, Replace(Replace(Concat('€ ', Format(`product_price`, 2)), ',', ''), '.', ',') AS `product_price`, supplier_id, product_type_code, other_product_details FROM products";
+
+      $results = $this->DataHandler->countPages($paginationsql);
+      $results2 = $this->DataHandler->readsData($sql);
+
+      $results = [$results, $results2];
+
+      return $results;
 
     } catch (Exception $e) {
       throw $e;
@@ -94,7 +106,7 @@ class ProductsLogic
   public function updateProduct($id,$product_name,$product_price,$other_product_details) {
     try{
 
-      $sql = "UPDATE `products` SET `product_name`='{$product_name}', `other_product_details`='{$other_product_details}', `product_price`='{$product_price}' WHERE `product_id`='{$id}'";
+      $sql = "UPDATE `products` SET `product_name`='{$product_name}', `other_product_details`='{$other_product_details}', `product_price`='{$product_price}' WHERE `id`='{$id}'";
       $results = $this->DataHandler->updateData($sql);
       return $results;
 
@@ -106,7 +118,7 @@ class ProductsLogic
   public function deleteProduct($id) {
     try{
 
-      $sql = "DELETE FROM `products` WHERE `product_id`='{$id}'";
+      $sql = "DELETE FROM `products` WHERE `id`='{$id}'";
       $results = $this->DataHandler->deleteData($sql);
       return $results;
 
@@ -116,6 +128,6 @@ class ProductsLogic
   }
 
   public function exportProducts() {
-    
+
   }
 }

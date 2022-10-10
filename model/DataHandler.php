@@ -33,16 +33,6 @@ class DataHandler{
 		return $this->lastInsertId();
 	}
 
-
-	public function countPages($sql,$item_per_page){
-		$this->query($sql);
-		$get_total_rows = $this->sth->rowCount();
-		
-		//breaking total records into pages
-		return ceil($get_total_rows/$item_per_page);
-		// return $pages;
-	}
-
 	public function readData($sql){
 		// return $this->query($sql);
 		return $this->dbh->query($sql,PDO::FETCH_ASSOC);
@@ -53,8 +43,12 @@ class DataHandler{
 		return $this->dbh->query($sql,PDO::FETCH_ASSOC);
 	}
 
-	public function readsDataPrice($sql){
-
+	public function countPages($sql){
+		$this->query($sql);
+		$get_total_rows = $this->sth->rowCount();
+		//breaking total records into pages
+		$pages = ceil($get_total_rows/ITEMS_PER_PAGE);
+		return $pages;
 	}
 
 	public function updateData($sql){
@@ -65,12 +59,13 @@ class DataHandler{
 		$sth = $this->dbh->query($sql);
 		return $sth->rowCount();
 	}
-	public function query($query){  
+	public function query($query){
 		$this->sth = $this->dbh->prepare($query);
-		return $this->sth->execute();    
+		return $this->sth->execute();
 	}
-	public function lastInsertId(){  
-		return $this->dbh->lastInsertId();  
+	public function lastInsertId(){
+		return $this->dbh->lastInsertId();
 	}
+
 }
 ?>

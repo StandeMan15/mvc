@@ -36,11 +36,11 @@ class ProductsController {
                 case 'search':
                     $this->collectSearchProduct();
                     break;
-                
+
                 case 'export':
                     $this->collectExportProducts();
                     break;
-            
+
                 default:
                     # code...
                     $this->collectReadallProducts();
@@ -72,7 +72,7 @@ class ProductsController {
             $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
 
             $res = $this->ProductsLogic->readProducts($id);
-            $html = $this->Display->CreateCardProduct($res);
+            $html = $this->Display->CreateCard($res);
 
             include 'view/products/read.php';
         }
@@ -92,27 +92,23 @@ class ProductsController {
                 $html = $this->ProductsLogic->createProducts($product_name, $product_price, $supplier_id, $product_type_code, $other_product_details);
 
                 $msg = $html;
-                
+
             }
 
             include 'view/products/create.php';
-        
+
         }
+
         public function collectReadallProducts(){
 
-            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;      
-            $perPage = 5;
-            $limit = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-            // $pages = $this->ProductsLogic->pagenav($perPage);
+            $res = $this->ProductsLogic->readAllProducts($page);
 
-            $res = $this->ProductsLogic->readallProducts($limit,$perPage);
-
-            
             $pages = $res[0];
             $nav = $this->Display->PageNavigation($pages,$page);
             $html = $this->Display->createTable($res[1], true);
-            
+
             include 'view/Products.php';
         }
 
@@ -123,7 +119,7 @@ class ProductsController {
         $other_product_details = isset($_REQUEST['other_product_details']) ? $_REQUEST['other_product_details'] : null;
 
         if (isset($_POST['submit'])) {
-            
+
             $res = $this->ProductsLogic->updateProduct($id, $product_name, $product_price, $other_product_details);
 
             $msg = $res;
@@ -146,7 +142,7 @@ class ProductsController {
         $id = isset($_REQUEST['product_id']) ? $_REQUEST['product_id'] :null;
 
         if (isset($_POST['submit'])) {
-            
+
             $html = $this->ProductsLogic->deleteContact($id);
 
             $msg = $html;
@@ -160,7 +156,7 @@ class ProductsController {
 
     public function collectExportProducts() {
 
-        
+
 
     }
 }

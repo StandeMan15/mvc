@@ -32,7 +32,7 @@ if (!isset($_SESSION)) {
   <p>With a <b>flexible</b> layout.</p>
 </div>
 
-<?php 
+<?php
 
 
     $getfiles = file_get_contents(__DIR__.'../../assets/loggedinheader.json');
@@ -70,7 +70,7 @@ if (!isset($_SESSION)) {
     <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
 
 
-    
+
   </div>
   <div class="main">
 
