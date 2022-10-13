@@ -6,6 +6,7 @@
             <button class="btn btn-secondary my-2 my-sm-0" name="searchSubmit" type="submit">Search</button>
         </form>
 
+        <a class="btn btn-success px-4" style="height: 40px;" href="index.php?con=products&op=delete">Delete Selected Products</a>
         <a class="btn btn-success px-4 float-right" style="height: 40px;" href="index.php?con=products&op=create">Create New Product</a>
     </div>
 
@@ -13,7 +14,7 @@
     <?= $html ?>
     <?= $nav ?>
 
-    
+
 
     </div>
     </div>

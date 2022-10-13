@@ -7,7 +7,8 @@ class Display{
     $tableheader = false;
     $html = "";
     if($checkbox) {
-      $html .= "<form action='?con={$_GET['con']}&op=delete&id={$row['id']}' method='POST'>";
+      $html .= "<form action='?con=product&op=delete' method='POST'>";
+
     }
 
     $html .= "<table class='table table-hover table-responsive-sm'>";
@@ -16,7 +17,7 @@ class Display{
       if ($tableheader == false) {
         $html .= "<tr>";
         if($checkbox) {
-          $html .= "<th><input type='checkbox' onClick='toggle(this)'></th>";
+          $html .= "<th><input type='checkbox'></th>";
         }
         foreach ($row as $key => $value) {
           $html .= "<th>{$key}</th>";
@@ -32,12 +33,11 @@ class Display{
       $html .= "<tr>";
       if($checkbox) {
         $html .= "<td><input type='checkbox' name='delete' value={$row['id']}></td>";
+        echo $row['id'] . "<br>";
       }
         foreach($row as $value){
           $html .= "<td>{$value}</td>";
-          //var_dump($value);
       }
-
 
 
       if ($actionMode) {
@@ -51,6 +51,7 @@ class Display{
     }
     $html .= "</table>";
     if($checkbox) {
+      $html .= '<input type="submit">';
       $html .= "</form>";
     }
     return $html;
@@ -164,4 +165,5 @@ $html .= "</nav>";
     checkboxes[i].checked = source.checked;
   }
 }
+
 </script>

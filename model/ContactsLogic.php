@@ -6,15 +6,15 @@ require_once "model/FileUpload.php";
 
 class ContactsLogic
 {
-  public function __construct()
-  {
-    $this->DataHandler = new Datahandler("localhost", "mysql", "mvc", "root", "");
-    $this->FileUpload = new FileUpload();
-  }
+    public function __construct()
+    {
+      $this->DataHandler = new Datahandler("localhost", "mysql", "mvc", "root", "");
+      $this->FileUpload = new FileUpload();
+    }
 
-  public function __destruct()
-  {
-  }
+    public function __destruct()
+    {
+    }
   public function createContact($name, $phone, $email, $address)
   {
     try {

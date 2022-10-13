@@ -107,7 +107,7 @@ class ProductsController {
 
             $pages = $res[0];
             $nav = $this->Display->PageNavigation($pages,$page);
-            $html = $this->Display->createTable($res[1], true);
+            $html = $this->Display->createTable($res[1], true, true);
 
             include 'view/Products.php';
         }

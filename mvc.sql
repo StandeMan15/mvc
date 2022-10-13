@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 01 jun 2022 om 16:54
+-- Gegenereerd op: 12 okt 2022 om 10:32
 -- Serverversie: 10.4.22-MariaDB
 -- PHP-versie: 8.1.2
 
@@ -58,51 +58,31 @@ INSERT INTO `contacts` (`id`, `name`, `phone`, `email`, `location`) VALUES
 
 CREATE TABLE `content` (
   `id` int(11) NOT NULL,
-  `content_name` varchar(40) NOT NULL,
-  `content_type` varchar(40) NOT NULL,
-  `content_html` varchar(200) NOT NULL,
-  `content_url` varchar(400) NOT NULL,
-  `content_active` tinyint(1) NOT NULL,
-  `creation_date` date NOT NULL,
-  `update_date` date NOT NULL
+  `author` varchar(40) NOT NULL,
+  `title` varchar(60) NOT NULL,
+  `images` int(11) NOT NULL,
+  `contents` text NOT NULL,
+  `socialmedia` int(11) NOT NULL,
+  `publishdate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `content`
 --
 
-INSERT INTO `content` (`id`, `content_name`, `content_type`, `content_html`, `content_url`, `content_active`, `creation_date`, `update_date`) VALUES
-(1, 'je moeder', 'hoer', 'none', 'none', 0, '2022-03-01', '2022-03-25');
+INSERT INTO `content` (`id`, `author`, `title`, `images`, `contents`, `socialmedia`, `publishdate`) VALUES
+(1, '', 'Artikel titel', 0, '', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `customer_orders`
+-- Tabelstructuur voor tabel `images`
 --
 
-CREATE TABLE `customer_orders` (
-  `order_id` int(6) NOT NULL,
-  `customer_id` int(6) DEFAULT NULL,
-  `order_status_code` varchar(30) DEFAULT NULL,
-  `payment_methode_code` varchar(30) DEFAULT NULL,
-  `order_date` varchar(50) DEFAULT NULL,
-  `der_order_price` varchar(50) DEFAULT NULL,
-  `other_other_details` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `customer_orders_product`
---
-
-CREATE TABLE `customer_orders_product` (
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `comments` varchar(30) DEFAULT NULL,
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `filename` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -111,7 +91,7 @@ CREATE TABLE `customer_orders_product` (
 --
 
 CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `product_type_code` int(11) DEFAULT NULL,
   `supplier_id` int(11) DEFAULT NULL,
   `product_name` varchar(80) DEFAULT NULL,
@@ -124,7 +104,7 @@ CREATE TABLE `products` (
 -- Gegevens worden geëxporteerd voor tabel `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_type_code`, `supplier_id`, `product_name`, `product_price`, `other_product_details`, `image`) VALUES
+INSERT INTO `products` (`id`, `product_type_code`, `supplier_id`, `product_name`, `product_price`, `other_product_details`, `image`) VALUES
 (1, 1, 1, 'Chocolate', '1.29', '1 pc.', ''),
 (2, 1, 1, 'Sprinkled', '1.29', '1 pc.', ''),
 (3, 1, 1, 'Maple', '1.49', '1 pc.', ''),
@@ -134,7 +114,8 @@ INSERT INTO `products` (`product_id`, `product_type_code`, `supplier_id`, `produ
 (10, 1, 2, 'driehoek', '1.29', 'dit heeft 3 hoeken', 'e864c8490ab37ebf.jpg'),
 (11, 123456, 0, '', '<p style=\"text-align: right;\"><em>testdata</em></p>', '', ''),
 (12, 0, 12345, '', '<p><s><span style=\"color: rgb(126, 140, 141);\">Details</span></s></p>', '', ''),
-(13, 12, 2, 'dildo', '12.99', '<p>lekker</p>', '');
+(13, 12, 2, 'Appel', '12.99', '<p>lekker</p>', ''),
+(14, 21345678, 3, 'Banaan', '1.20', '', '');
 
 -- --------------------------------------------------------
 
@@ -154,18 +135,17 @@ CREATE TABLE `user` (
   `address_city` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `address_zipcode` varchar(6) CHARACTER SET utf8 DEFAULT NULL,
   `phone` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `website` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  `company_name` varchar(90) CHARACTER SET utf8 DEFAULT NULL,
-  `psw` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+  `psw` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `user_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
 --
 
-INSERT INTO `user` (`id`, `firstname`, `middlename`, `lastname`, `username`, `email`, `address_street`, `address_number`, `address_city`, `address_zipcode`, `phone`, `website`, `company_name`, `psw`) VALUES
-(1, 'Stan', 'de', 'Rijk', 'stendemen', 'standerijk@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'stan'),
-(2, 'johan', NULL, 'jansen', 'johanieboy23', 'johan@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Johan');
+INSERT INTO `user` (`id`, `firstname`, `middlename`, `lastname`, `username`, `email`, `address_street`, `address_number`, `address_city`, `address_zipcode`, `phone`, `psw`, `user_admin`) VALUES
+(1, 'Stan', 'de', 'Rijk', 'stendemen', 'standerijk@gmail.com', NULL, NULL, NULL, NULL, NULL, 'stan', 0),
+(2, 'johan', NULL, 'jansen', 'johanieboy23', 'johan@gmail.com', NULL, NULL, NULL, NULL, NULL, 'Johan', 0);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -184,25 +164,10 @@ ALTER TABLE `content`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexen voor tabel `customer_orders`
---
-ALTER TABLE `customer_orders`
-  ADD PRIMARY KEY (`order_id`);
-
---
--- Indexen voor tabel `customer_orders_product`
---
-ALTER TABLE `customer_orders_product`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `order_id` (`order_id`),
-  ADD UNIQUE KEY `order_id_2` (`order_id`),
-  ADD UNIQUE KEY `product_id` (`product_id`);
-
---
 -- Indexen voor tabel `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexen voor tabel `user`
@@ -227,39 +192,16 @@ ALTER TABLE `content`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT voor een tabel `customer_orders`
---
-ALTER TABLE `customer_orders`
-  MODIFY `order_id` int(6) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT voor een tabel `customer_orders_product`
---
-ALTER TABLE `customer_orders_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT voor een tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Beperkingen voor geëxporteerde tabellen
---
-
---
--- Beperkingen voor tabel `customer_orders_product`
---
-ALTER TABLE `customer_orders_product`
-  ADD CONSTRAINT `customer_orders_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `customer_orders` (`order_id`),
-  ADD CONSTRAINT `customer_orders_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
